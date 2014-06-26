@@ -12,6 +12,7 @@
 
     <context:annotation-config />
     <aop:aspectj-autoproxy/>
+    <task:annotation-driven/>
     <context:component-scan base-package="com.**.service.impl,com.util.commUtil.**" />
 
 
