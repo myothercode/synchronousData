@@ -4,34 +4,48 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
- * Created by wula on 2014/6/24.
- * 第一步，同步手机号码VO
+ * Created by wula on 2014/6/25.
+ * 第二部，通知计费平台
  */
 @XStreamAlias("SBMP_MO_MESSAGE")
-public class StepOneSendPhoneNoToThird {
-    /**短信平台连接编号（不重复）*/
-    private String CONNECT_ID;
-    /**短信平台信息编号（不重复）*/
-    private String MO_MESSAGE_ID;
+public class StepTwoNoticeChargeThirdPartVO extends BaseVO {
+    /**短信平台连接id*/
+    public String CONNECT_ID;
+    /**短信信息编号*/
+    public String MO_MESSAGE_ID;
     /**受理时间*/
-    private Long RECEIVE_TIME;
-    /**网关编号(移动101,电信310,联通232)*/
-    private Integer GATEWAY_ID = 232;
+    public Long RECEIVE_TIME;
+    /**网关编号*/
+    public String GATEWAY_ID="232";
     /**有效性*/
-    private Integer VALID=1;
-    private String CITY_CODE="028";
-    private String CITY_NAME="";
-    private String STATE_CODE="";
-    private String STATE_NAME="";
+    public String VALID="1";
+    /**城市区号*/
+    public String CITY_CODE="028";
+    /**城市名称*/
+    public String CITY_NAME="成都";
+    /**省份区号*/
+    public String STATE_CODE;
+    /**省份名称*/
+    public String STATE_NAME;
     /**手机号*/
-    private String MSISDN;
-    private String MESSAGE_TYPE="8";
-    /**消息内容*/
-    private String MESSAGE;
-    private String LONG_CODE="1";
-    /*短信平台编号*/
-    private String SERVICE_CODE;
+    public String MSISDN;
+    /**信息内容*/
+    public String MESSAGE;
+    /***/
+    public String LONG_CODE="3";
+    /**通道号*/
+    public String SERVICE_CODE;
+    /***/
+    public String MESSAGE_TYPE="9";
 
+
+    public String getCONNECT_ID() {
+        return CONNECT_ID;
+    }
+
+    public void setCONNECT_ID(String CONNECT_ID) {
+        this.CONNECT_ID = CONNECT_ID;
+    }
 
     public String getMO_MESSAGE_ID() {
         return MO_MESSAGE_ID;
@@ -49,19 +63,19 @@ public class StepOneSendPhoneNoToThird {
         this.RECEIVE_TIME = RECEIVE_TIME;
     }
 
-    public Integer getGATEWAY_ID() {
+    public String getGATEWAY_ID() {
         return GATEWAY_ID;
     }
 
-    public void setGATEWAY_ID(Integer GATEWAY_ID) {
+    public void setGATEWAY_ID(String GATEWAY_ID) {
         this.GATEWAY_ID = GATEWAY_ID;
     }
 
-    public Integer getVALID() {
+    public String getVALID() {
         return VALID;
     }
 
-    public void setVALID(Integer VALID) {
+    public void setVALID(String VALID) {
         this.VALID = VALID;
     }
 
@@ -105,14 +119,6 @@ public class StepOneSendPhoneNoToThird {
         this.MSISDN = MSISDN;
     }
 
-    public String getMESSAGE_TYPE() {
-        return MESSAGE_TYPE;
-    }
-
-    public void setMESSAGE_TYPE(String MESSAGE_TYPE) {
-        this.MESSAGE_TYPE = MESSAGE_TYPE;
-    }
-
     public String getMESSAGE() {
         return MESSAGE;
     }
@@ -137,22 +143,13 @@ public class StepOneSendPhoneNoToThird {
         this.SERVICE_CODE = SERVICE_CODE;
     }
 
-    public String getCONNECT_ID() {
-        return CONNECT_ID;
+    public String getMESSAGE_TYPE() {
+        return MESSAGE_TYPE;
     }
 
-    public void setCONNECT_ID(String CONNECT_ID) {
-        this.CONNECT_ID = CONNECT_ID;
+    public void setMESSAGE_TYPE(String MESSAGE_TYPE) {
+        this.MESSAGE_TYPE = MESSAGE_TYPE;
     }
 
-    public String getXML(){
-        XStream xstream = new XStream();
-        xstream.processAnnotations(StepOneSendPhoneNoToThird.class);
-        xstream.setMode(XStream.NO_REFERENCES);
-        String s=xstream.toXML(this);
-        if(!s.startsWith ("<?xml")){
-          s="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"+s;
-        }
-        return s;
-    }
+
 }

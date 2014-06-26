@@ -3,6 +3,7 @@ package com.util.commUtil.comm;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableBiMap;
 
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -47,6 +48,12 @@ public class DateUtils {
         }
     };
 
+    private static final ThreadLocal<DateFormat> dateTimeFormatThreadLocal1 = new ThreadLocal<DateFormat>() {
+        @Override
+        protected DateFormat initialValue() {
+            return new SimpleDateFormat("yyyyMMddHHmmssSS");
+        }
+    };
     private static final ThreadLocal<DateFormat> dateTimeFormatThreadLocal = new ThreadLocal<DateFormat>() {
         @Override
         protected DateFormat initialValue() {
@@ -96,5 +103,15 @@ public class DateUtils {
     /**long转为时间 date类型*/
     public static Date formatLongToDate(Long l){
        return  new Date(l * 1000);
+    }
+
+    /**得到日期字符串用于单据号*/
+    public static String formatDateTimeForBill(Date date){
+        return dateTimeFormatThreadLocal1.get().format(date);
+    }
+
+    /**Timestamp转date*/
+    public static Date timestamp2Date(Timestamp timestamp){
+          return new Date(timestamp.getTime());
     }
 }
