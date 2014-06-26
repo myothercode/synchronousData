@@ -24,6 +24,6 @@ public class TaskServiceImpl implements com.service.TaskService {
     @Scheduled(cron="0/10 * *  * * ?")
     @Override
     public void getDateFromForStepTwo(){
-        System.out.println("cccc");
+        System.out.println("-");
     }
 }
