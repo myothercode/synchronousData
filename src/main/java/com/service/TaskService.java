@@ -7,5 +7,9 @@ import org.springframework.scheduling.annotation.Scheduled;
  */
 public interface TaskService {
     /**为第二步查询数据，从数据库*/
-    void getDateFromForStepTwo();
+    void getDateFromForStepTwo() throws InterruptedException;
+
+
+    @Scheduled(cron="0/10 * *  * * ?")
+    void getDataForStepFourFromDB();
 }

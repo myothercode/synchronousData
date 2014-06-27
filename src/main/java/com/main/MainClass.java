@@ -1,12 +1,15 @@
 package com.main;
 
+import com.DataQueue.QueueAndPool;
 import com.domain.StepThreeResponseVO;
 import com.domain.StepTwoNoticeChargeThirdPartVO;
-import com.service.PostActionService;
 import com.util.commUtil.comm.DateUtils;
+import com.util.commUtil.comm.MyApplicationContextUtil;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.task.TaskExecutor;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -17,9 +20,16 @@ import java.util.Date;
  */
 public class MainClass {
     static Logger logger = Logger.getLogger(MainClass.class);
-    public static ApplicationContext applicationContext=new ClassPathXmlApplicationContext("classpath:spring/applicationContext.xml");
+    public static AbstractApplicationContext applicationContext=new ClassPathXmlApplicationContext("classpath:spring/applicationContext.xml");
     public static void main(String[] args) throws Exception {
-        logger.error("fff");
+        if(QueueAndPool.taskExecutor==null){
+            QueueAndPool.taskExecutor= MyApplicationContextUtil.getContext().getBean("taskExecutor", TaskExecutor.class);
+        }
+
+
+
+
+       // logger.error("fff");
 
        /* LogTestService logTestService=applicationContext.getBean(LogTestService.class);
         logTestService.testLog();*/
