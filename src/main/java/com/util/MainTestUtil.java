@@ -3,10 +3,10 @@ package com.util;
 import org.apache.log4j.Logger;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 
 /**
  * Created by chace.cai on 2014/7/1.
@@ -20,7 +20,7 @@ public class MainTestUtil {
         URL url= null;
         String xml=getxml1();
         try {url = new URL(bjurl);
-            URLConnection conn=  url.openConnection();
+            HttpURLConnection conn=  (HttpURLConnection)url.openConnection();
             conn.setDoOutput(true);
             conn.setRequestProperty("Cache-Control", "no-cache");
             conn.setRequestProperty("Content-Type", "text/plain; charset=GB2312");
@@ -29,15 +29,19 @@ public class MainTestUtil {
             conn.setRequestProperty("http.conn-manager.max-total", "100");
             conn.setRequestProperty("http.protocol.allow-circular-redirects", "false");
             conn.setRequestProperty("http.connection.timeout", "10000");
-
             conn.setRequestProperty("User-Agent","Mozilla/5.0 (Windows; U; Windows NT 6.0; zh-CN; rv:1.9.1.8) Gecko/20100202 Firefox/3.5.8 (.NET CLR 3.5.30729)");
-            // conn.setRequestMethod("POST");
+            conn.setRequestMethod("POST");
+            conn.connect();
 
-            OutputStreamWriter opw=new OutputStreamWriter(conn.getOutputStream(),"GB2312");
+            //OutputStreamWriter opw=new OutputStreamWriter(conn.getOutputStream(),"GB2312");
+            DataOutputStream out = new DataOutputStream(conn.getOutputStream());
+            out.writeBytes(xml); //写入请求的字符串
+            out.flush();
+            out.close();
 
-            opw.write(new String( xml.getBytes(),"GB2312"));
+            /*opw.write(new String( xml.getBytes(),"GB2312"));
             opw.flush();
-            opw.close();
+            opw.close();*/
 
             InputStreamReader read=new InputStreamReader(conn.getInputStream(),"GB2312");
             BufferedReader reader=new BufferedReader(read);
