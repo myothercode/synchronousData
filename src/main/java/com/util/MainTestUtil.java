@@ -1,10 +1,10 @@
 package com.util;
 
+import com.util.commUtil.comm.JSONSimpler;
 import org.apache.log4j.Logger;
 
-import java.io.BufferedReader;
 import java.io.DataOutputStream;
-import java.io.InputStreamReader;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -18,7 +18,7 @@ public class MainTestUtil {
 
     public static void main(String[] args) throws Exception {
         URL url= null;
-        String xml=getxml1();
+        String xml=getJson2();
         try {url = new URL(bjurl);
             HttpURLConnection conn=  (HttpURLConnection)url.openConnection();
             conn.setDoOutput(true);
@@ -39,11 +39,20 @@ public class MainTestUtil {
             out.flush();
             out.close();
 
+
+            InputStream in=conn.getInputStream();
+            System.out.println(in.available());
+            byte[] data1 = new byte[in.available()];
+            String a="";
+            in.read(data1);
+            //转成字符串
+            a = new String(data1);
+            System.out.println(a);
             /*opw.write(new String( xml.getBytes(),"GB2312"));
             opw.flush();
             opw.close();*/
 
-            InputStreamReader read=new InputStreamReader(conn.getInputStream(),"GB2312");
+            /*InputStreamReader read=new InputStreamReader(conn.getInputStream(),"GB2312");
             BufferedReader reader=new BufferedReader(read);
             String result="";
             String responseTEXT="";
@@ -53,7 +62,7 @@ public class MainTestUtil {
                 System.out.println(result);
                 responseTEXT+=result;
 
-            }
+            }*/
 
         } catch (Exception e) {
             logger.error(e.getMessage()+"xml:"+xml,e);
@@ -90,6 +99,106 @@ public class MainTestUtil {
         sb.append("</SBMP_MO_MESSAGE>");
 
         return sb.toString();
+    }
+
+
+    public static String getJson2(){
+        SdkParams sdkParams = new SdkParams();
+        sdkParams.setAppId("FA6F7EA9678DAD0BC77296CF871C4A4A");
+        sdkParams.setBillingCode("10000024");
+        sdkParams.setChannel("test-chengdu");
+        sdkParams.setImsi("1861065014418610650144");
+        sdkParams.setP_mid("18610650144");
+        sdkParams.setP_money("3");
+        sdkParams.setHmac("dsdawsda");
+        return JSONSimpler.toJson(sdkParams);
+    }
+    static class SdkParams{
+        private String orderId;
+        private String AppId;
+        private String billingCode;
+        private String Imsi;
+        private String p_str;
+        private String Channel;
+        private String p_money;
+        private String p_sp_money;
+        private String p_channel_id;
+        private String p_mid;
+        private String p_res;
+        private String hmac;
+
+        public String getOrderId() {
+            return orderId;
+        }
+        public void setOrderId(String orderId) {
+            this.orderId = orderId;
+        }
+        public String getAppId() {
+            return AppId;
+        }
+        public void setAppId(String appId) {
+            AppId = appId;
+        }
+        public String getBillingCode() {
+            return billingCode;
+        }
+        public void setBillingCode(String billingCode) {
+            this.billingCode = billingCode;
+        }
+        public String getImsi() {
+            return Imsi;
+        }
+        public void setImsi(String imsi) {
+            Imsi = imsi;
+        }
+        public String getP_str() {
+            return p_str;
+        }
+        public void setP_str(String p_str) {
+            this.p_str = p_str;
+        }
+        public String getChannel() {
+            return Channel;
+        }
+        public void setChannel(String channel) {
+            Channel = channel;
+        }
+        public String getP_money() {
+            return p_money;
+        }
+        public void setP_money(String p_money) {
+            this.p_money = p_money;
+        }
+        public String getP_sp_money() {
+            return p_sp_money;
+        }
+        public void setP_sp_money(String p_sp_money) {
+            this.p_sp_money = p_sp_money;
+        }
+        public String getP_channel_id() {
+            return p_channel_id;
+        }
+        public void setP_channel_id(String p_channel_id) {
+            this.p_channel_id = p_channel_id;
+        }
+        public String getP_mid() {
+            return p_mid;
+        }
+        public void setP_mid(String p_mid) {
+            this.p_mid = p_mid;
+        }
+        public String getP_res() {
+            return p_res;
+        }
+        public void setP_res(String p_res) {
+            this.p_res = p_res;
+        }
+        public String getHmac() {
+            return hmac;
+        }
+        public void setHmac(String hmac) {
+            this.hmac = hmac;
+        }
     }
 
 }
