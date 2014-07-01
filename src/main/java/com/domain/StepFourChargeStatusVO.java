@@ -12,7 +12,7 @@ public class StepFourChargeStatusVO extends BaseVO{
     private String CONNECT_ID;
     /**短信平台信息编号。与3中的bstrMoMessageID相同*/
     private String MO_MESSAGE_ID;
-    /**业务编码。第五步中返回的bstrBusinessCode*/
+    /**业务编码。第三方返回的bstrBusinessCode*/
     private String BUSINESS_CODE;
     /**手机号*/
     private String MSISDN;

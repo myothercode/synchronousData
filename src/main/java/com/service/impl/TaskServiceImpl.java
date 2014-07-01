@@ -70,6 +70,7 @@ public class TaskServiceImpl implements com.service.TaskService {
             return;
         }
         List<StepTwoNoticeChargeThirdPartVO> sList = getAndUpdateDataFromDBService.getDataForStepTwo();
+
         if(sList.isEmpty()){
             return;
         }

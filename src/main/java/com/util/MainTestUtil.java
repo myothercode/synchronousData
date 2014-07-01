@@ -3,8 +3,7 @@ package com.util;
 import com.util.commUtil.comm.JSONSimpler;
 import org.apache.log4j.Logger;
 
-import java.io.DataOutputStream;
-import java.io.InputStream;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -13,7 +12,7 @@ import java.net.URL;
  */
 public class MainTestUtil {
     static Logger logger = Logger.getLogger(MainTestUtil.class);
-    private static final String bjurl="http://114.215.109.179:8888/payResult";
+    private static final String bjurl="http://114.215.109.179:8888/PrePayServlet";
     //public static AbstractApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring/applicationContext.xml");
 
     public static void main(String[] args) throws Exception {
@@ -22,6 +21,7 @@ public class MainTestUtil {
         try {url = new URL(bjurl);
             HttpURLConnection conn=  (HttpURLConnection)url.openConnection();
             conn.setDoOutput(true);
+            conn.setDoInput(true);
             conn.setRequestProperty("Cache-Control", "no-cache");
             conn.setRequestProperty("Content-Type", "text/plain; charset=GB2312");
             conn.setRequestProperty("http.protocol.version", "HTTP/1.1");
@@ -33,26 +33,13 @@ public class MainTestUtil {
             conn.setRequestMethod("POST");
             conn.connect();
 
-            //OutputStreamWriter opw=new OutputStreamWriter(conn.getOutputStream(),"GB2312");
-            DataOutputStream out = new DataOutputStream(conn.getOutputStream());
-            out.writeBytes(xml); //写入请求的字符串
-            out.flush();
-            out.close();
+            OutputStreamWriter opw=new OutputStreamWriter(conn.getOutputStream(),"GB2312");
 
-
-            InputStream in=conn.getInputStream();
-            System.out.println(in.available());
-            byte[] data1 = new byte[in.available()];
-            String a="";
-            in.read(data1);
-            //转成字符串
-            a = new String(data1);
-            System.out.println(a);
-            /*opw.write(new String( xml.getBytes(),"GB2312"));
+            opw.write(new String( xml.getBytes(),"GB2312"));
             opw.flush();
-            opw.close();*/
+            opw.close();
 
-            /*InputStreamReader read=new InputStreamReader(conn.getInputStream(),"GB2312");
+            InputStreamReader read=new InputStreamReader(conn.getInputStream(),"GB2312");
             BufferedReader reader=new BufferedReader(read);
             String result="";
             String responseTEXT="";
@@ -62,7 +49,7 @@ public class MainTestUtil {
                 System.out.println(result);
                 responseTEXT+=result;
 
-            }*/
+            }
 
         } catch (Exception e) {
             logger.error(e.getMessage()+"xml:"+xml,e);
