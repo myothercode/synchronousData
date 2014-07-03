@@ -10,7 +10,6 @@ import com.util.commUtil.comm.DateUtils;
 import com.util.commUtil.comm.MyStringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -70,15 +69,16 @@ public class TaskServiceImpl implements com.service.TaskService {
             return;
         }
         List<StepTwoNoticeChargeThirdPartVO> sList = getAndUpdateDataFromDBService.getDataForStepTwo();
-
         if(sList.isEmpty()){
             return;
         }
         else {
+            System.out.println("获取到"+sList.size()+"条..");
             for (StepTwoNoticeChargeThirdPartVO s2:sList){
                 try {
                     s2.setCONNECT_ID(DateUtils.formatDateTimeForBill(new Date())+"x"+ MyStringUtils.randomNum(6));
                     QueueAndPool.stepTwoQueue.put(s2);
+                    System.out.println("stepTwoQueue中放入数据，现在有"+QueueAndPool.stepTwoQueue.size()+"条数据.");
                 } catch (Exception e) {
                     logger.error(e.getMessage(),e);
                     continue;
@@ -113,6 +113,7 @@ public class TaskServiceImpl implements com.service.TaskService {
                 try {
                     s2.setCONNECT_ID(DateUtils.formatDateTimeForBill(new Date())+"x"+ MyStringUtils.randomNum(6));
                     QueueAndPool.stepFourQueue.put(s2);
+                    System.out.println("stepFourQueue中放入数据，现在有"+QueueAndPool.stepFourQueue.size()+"条数据.");
                 } catch (Exception e) {
                     logger.error(e.getMessage(),e);
                     continue;

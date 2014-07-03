@@ -21,6 +21,7 @@ public class CycleForStepTwoThread extends Thread {
         StepTwoNoticeChargeThirdPartVO stepTwoNoticeChargeThirdPartVO=null;
         while (true){
             try {
+                System.out.println("twoQueue中有"+QueueAndPool.stepTwoQueue.size()+"条数据");
                 stepTwoNoticeChargeThirdPartVO = QueueAndPool.stepTwoQueue.take();
                 QueueAndPool.taskExecutor.execute(new PostActionServiceRunAble(stepTwoNoticeChargeThirdPartVO.getXML(),stepTwoNoticeChargeThirdPartVO.getMO_MESSAGE_ID(),"2"));
             } catch (Exception e) {

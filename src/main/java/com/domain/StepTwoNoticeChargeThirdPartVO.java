@@ -1,6 +1,5 @@
 package com.domain;
 
-import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
@@ -27,6 +26,7 @@ public class StepTwoNoticeChargeThirdPartVO extends BaseVO {
     public String STATE_CODE;
     /**省份名称*/
     public String STATE_NAME;
+    public String TP_PID ;
     /**手机号*/
     public String MSISDN;
     /**信息内容*/
@@ -38,6 +38,14 @@ public class StepTwoNoticeChargeThirdPartVO extends BaseVO {
     /***/
     public String MESSAGE_TYPE="9";
 
+
+    public String getTP_PID() {
+        return TP_PID;
+    }
+
+    public void setTP_PID(String TP_PID) {
+        this.TP_PID = TP_PID;
+    }
 
     public String getCONNECT_ID() {
         return CONNECT_ID;

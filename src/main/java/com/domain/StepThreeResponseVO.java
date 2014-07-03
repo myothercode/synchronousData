@@ -1,6 +1,5 @@
 package com.domain;
 
-import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
@@ -13,6 +12,16 @@ public class StepThreeResponseVO extends BaseVO {
     private String Result;
     /**与请求中的bstrMoMessageID相同*/
     private String MessageID;
+    private String Message;
+
+
+    public String getMessage() {
+        return Message;
+    }
+
+    public void setMessage(String message) {
+        Message = message;
+    }
 
     public String getResult() {
         return Result;

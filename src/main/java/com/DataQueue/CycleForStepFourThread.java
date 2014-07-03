@@ -1,7 +1,6 @@
 package com.DataQueue;
 
 import com.domain.StepFourChargeStatusVO;
-import com.domain.StepTwoNoticeChargeThirdPartVO;
 import com.service.impl.PostActionServiceRunAble;
 import org.apache.log4j.Logger;
 
@@ -22,6 +21,7 @@ public class CycleForStepFourThread extends Thread {
         StepFourChargeStatusVO stepFourNoticeChargeThirdPartVO=null;
         while (true){
             try {
+                System.out.println("stepFourQueue中有"+QueueAndPool.stepFourQueue.size()+"条数据");
                 stepFourNoticeChargeThirdPartVO = QueueAndPool.stepFourQueue.take();
                 QueueAndPool.taskExecutor.execute(new PostActionServiceRunAble(stepFourNoticeChargeThirdPartVO.getXML(),stepFourNoticeChargeThirdPartVO.getMO_MESSAGE_ID(),"4"));
             } catch (Exception e) {
