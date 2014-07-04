@@ -114,5 +114,10 @@ public class GetAndUpdateDataFromDBServiceImpl implements GetAndUpdateDataFromDB
         String sql="update sms_send_tb set post_flag='2' where flag='1' and message_id=?";
         Object[] params = new Object[]{id};
         jdbcTemplate.update(sql,params);
+
+        //记录第四部的请求内容
+        String sql1="insert into sms_thirdpart_log_tb(message_id,step4xml) values(?,?)";
+        Object[] p2=new Object[]{id,resText};
+        jdbcTemplate.update(sql1,p2);
     }
 }
