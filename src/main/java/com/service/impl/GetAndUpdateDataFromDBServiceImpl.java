@@ -61,7 +61,7 @@ public class GetAndUpdateDataFromDBServiceImpl implements GetAndUpdateDataFromDB
                 " from sms_send_tb a,sms_log_new b" +
                 " where a.mobile_no=b.mobile_no and a.reserve=b.reserve " +
                 " and b.reserve is not null and a.message_id is not null" +
-                " and a.flag='1' and a.post_flag='1'" +
+                " and a.flag='1' and a.post_flag='1' and b.flag='3'" +
                 " order by a.idnum desc";
         List<StepFourChargeStatusVO> list=jdbcTemplate.query(sql,new DataMapperE());
         if(list==null || list.isEmpty())return new ArrayList<StepFourChargeStatusVO>();
