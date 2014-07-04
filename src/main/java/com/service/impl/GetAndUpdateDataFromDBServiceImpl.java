@@ -87,27 +87,26 @@ public class GetAndUpdateDataFromDBServiceImpl implements GetAndUpdateDataFromDB
     @Override
     public void updateFlagForStepTwo(String id,String resText){
 
-        String flag="0";
+        String postflag="1";
         if(StringUtils.isEmpty(resText)){
-            flag="8";
+            postflag="8";
         }else {
             XStream xStream = new XStream();
             xStream.alias("Data", StepThreeResponseVO.class);
             try {
                 StepThreeResponseVO stepThreeResponseVO= (StepThreeResponseVO) xStream.fromXML(resText);
                 if(!"0".equals(stepThreeResponseVO.getResult())){
-                    flag="8";
+                    postflag="8";
                 }
             } catch (Exception e) {
-                flag="8";
+                postflag="8";
                 logger.error(e.getMessage(),e);
 
             }
         }
 
-
-        String sql="update sms_send_tb set flag=?,sendTime=getdate(),post_flag='1',response_msg=? where flag='9' and message_id=?";
-        Object[] params = new Object[]{flag,resText,id};
+        String sql="update sms_send_tb set sendTime=getdate(),post_flag=?,response_msg=? where flag='9' and message_id=?";
+        Object[] params = new Object[]{postflag,resText,id};
         jdbcTemplate.update(sql,params);
     }
     @Override
