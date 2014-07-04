@@ -61,7 +61,7 @@ public class GetAndUpdateDataFromDBServiceImpl implements GetAndUpdateDataFromDB
                 " from sms_send_tb a,sms_log_new b" +
                 " where a.mobile_no=b.mobile_no and a.reserve=b.reserve " +
                 " and b.reserve is not null and a.message_id is not null" +
-                " and a.flag='1' and a.post_flag='1'" +
+                " and a.flag='1' and a.post_flag='1' and b.flag='3'" +
                 " order by a.idnum desc";
         List<StepFourChargeStatusVO> list=jdbcTemplate.query(sql,new DataMapperE());
         if(list==null || list.isEmpty())return new ArrayList<StepFourChargeStatusVO>();
@@ -101,11 +101,10 @@ public class GetAndUpdateDataFromDBServiceImpl implements GetAndUpdateDataFromDB
             } catch (Exception e) {
                 postflag="8";
                 logger.error(e.getMessage(),e);
-
             }
         }
 
-        String sql="update sms_send_tb set sendTime=getdate(),post_flag=?,response_msg=? where flag='9' and message_id=?";
+        String sql="update sms_send_tb set sendTime=getdate(),post_flag=?,response_msg=? where message_id=?";
         Object[] params = new Object[]{postflag,resText,id};
         jdbcTemplate.update(sql,params);
     }
