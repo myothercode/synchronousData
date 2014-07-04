@@ -101,11 +101,10 @@ public class GetAndUpdateDataFromDBServiceImpl implements GetAndUpdateDataFromDB
             } catch (Exception e) {
                 postflag="8";
                 logger.error(e.getMessage(),e);
-
             }
         }
 
-        String sql="update sms_send_tb set sendTime=getdate(),post_flag=?,response_msg=? where flag='9' and message_id=?";
+        String sql="update sms_send_tb set sendTime=getdate(),post_flag=?,response_msg=? where message_id=?";
         Object[] params = new Object[]{postflag,resText,id};
         jdbcTemplate.update(sql,params);
     }
